@@ -7,6 +7,7 @@ import Lab2 from "./Lab2";
 export default function Labs() {
   return (
     <div>
+      <h1>Tianshu Chu</h1>
       <h1>Labs</h1>
       <TOC />
       <Routes>
