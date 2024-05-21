@@ -1,31 +1,44 @@
 export default function AssignmentEditor() {
   return (
-    <div id="wd-assignments-editor">
-      <label htmlFor="wd-name">
-        <b>Assignment Name</b>
-      </label>
-      <br />
-      <br />
-      <input id="wd-name" value="A1 - ENV + HTML" />
-      <br />
-      <br />
-      <textarea id="wd-description" rows={9} cols={45}>
-        The assignment is available online Submit a link to the landing page of
+    <div className="mb-3">
+      <div id="wd-assignments-editor" className="mb-3">
+        <label form="wd-name" className="form-label mb-3">
+          <b>Assignment Name</b>
+        </label>
+        <br />
+        <input
+          className="form-control "
+          id="wd-name"
+          placeholder="A1 - ENV + HTML"
+        />
+      </div>
+      <textarea
+        className="form-control mb=3"
+        id="wd-description"
+        rows={5}
+        cols={45}
+      >
+        The assignment is available online. Submit a link to the landing page of
         your Web application running on Netlify. The landing page should include
         the following: Your full name and section Links to each of the lab
         assignments Link to the Kanbas application Links to all relevant source
         code repositories The Kanbas application should include a link to
         navigate back to the landing page.
       </textarea>
-      <br />
-      <br />
-      <table>
+      <table className="mt-3 mb-3">
         <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-points">Points</label>
+          <td>
+            <div className="col-auto">
+              <label form="input-point" className="col-form-label">
+                Points
+              </label>
+            </div>
           </td>
           <td>
-            <input id="wd-points" value={100} />
+            <div className="col-auto">
+              <input id="input-point" className="form-control" />
+            </div>
+            <div className="col-auto"></div>
           </td>
         </tr>
         <br />
@@ -34,8 +47,11 @@ export default function AssignmentEditor() {
             <label htmlFor="wd-group">Assignment Group</label>
           </td>
           <td>
-            <select id="wd-select-group">
-              <option value="ASSIGNMENTS">ASSIGNMENTS</option>
+            <select className="form-select" aria-label="Default select example">
+              <option selected>ASSIGNMENTS</option>
+              <option value="1">A1</option>
+              <option value="2">A2</option>
+              <option value="3">A3</option>
             </select>
           </td>
         </tr>
@@ -45,8 +61,9 @@ export default function AssignmentEditor() {
             <label htmlFor="wd-display-grade-as">Display Grade as</label>
           </td>
           <td>
-            <select id="wd-select-display-grade-as">
-              <option value="PERCENTAGE">Percentage</option>
+            <select className="form-select" aria-label="Default select example">
+              <option selected>Percentage</option>
+              <option value="1">Percentage</option>
             </select>
           </td>
         </tr>
@@ -56,47 +73,73 @@ export default function AssignmentEditor() {
             <label htmlFor="wd-submission-type">Submission Type</label>
           </td>
           <td>
-            <select id="wd-select-submission-type">
-              <option value="ONLINE">Online</option>
+            <select className="form-select" aria-label="Default select example">
+              <option selected>Online</option>
+              <option value="1">Online</option>
             </select>
             <br />
             <br />
-            <label>Online Entry Options</label>
+            <label>
+              <b>Online Entry Options</b>
+            </label>
             <br />
-            <input
-              type="checkbox"
-              name="check-online-entry-options"
-              id="wd-text-entry"
-            />
-            <label htmlFor="wd-text-entry">Text Entry</label>
-            <br />
-            <input
-              type="checkbox"
-              name="check-online-entry-options"
-              id="wd-website-url"
-            />
-            <label htmlFor="wd-website-url">Website URL</label>
-            <br />
-            <input
-              type="checkbox"
-              name="check-online-entry-options"
-              id="wd-media-recordings"
-            />
-            <label htmlFor="wd-media-recordings">Media Recordings</label>
-            <br />
-            <input
-              type="checkbox"
-              name="check-online-entry-options"
-              id="wd-student-annotation"
-            />
-            <label htmlFor="wd-student-annotation">Student Annotation</label>
-            <br />
-            <input
-              type="checkbox"
-              name="check-online-entry-options"
-              id="wd-file-uploads"
-            />
-            <label htmlFor="wd-file-uploads">File Uploads</label>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label className="form-check-label" form="flexCheckDefault">
+                Text Entry
+              </label>
+            </div>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value=""
+                id="flexCheckDefault"
+                checked
+              />
+              <label className="form-check-label" form="flexCheckDefault">
+                Website URL
+              </label>
+            </div>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label className="form-check-label" form="flexCheckDefault">
+                Media Recordings
+              </label>
+            </div>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value=""
+                id="flexCheckDefault"
+                checked
+              />
+              <label className="form-check-label" form="flexCheckDefault">
+                Student Annotation
+              </label>
+            </div>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label className="form-check-label" form="flexCheckDefault">
+                File Uploads
+              </label>
+            </div>
           </td>
         </tr>
         <br />
@@ -139,8 +182,12 @@ export default function AssignmentEditor() {
         <tr>
           <td></td>
           <td align="right" valign="top">
-            <input type="button" value="Cancel" />
-            <input type="button" value="Save" />
+            <div className="float-end">
+              <button className="btn btn-lg btn-secondary border-gray">
+                Cancel
+              </button>
+              <button className="btn btn-lg btn-danger border-red">Save</button>
+            </div>
           </td>
         </tr>
       </table>
