@@ -2,23 +2,18 @@ export default function AssignmentEditor() {
   return (
     <>
       {/* Assignment Name */}
-      <div className="mb-3">
-        <label htmlFor="exampleFormControlInput1" className="form-label">
+      <div id="wd-assignments-editor" className="mb-3">
+        <label htmlFor="wd-name" className="form-label">
           Assignment Name
         </label>
-        <input
-          type="text"
-          className="form-control"
-          id="exampleFormControlInput1"
-          value={"A1"}
-        />
+        <input type="text" className="form-control" id="wd-name" value={"A1"} />
       </div>
 
       {/* Textarea */}
       <div className="mb-3">
         <textarea
           className="form-control"
-          id="exampleFormControlTextarea1"
+          id="wd-description"
           rows={10}
           value={
             "The assignment is available online\n Submit a link to the landing page of your Web application running on Netlify\n\n The landing page should include the following:\n • Your full name and section\n • Links to each of the lab assignments\n • Link to the Kanbas application\n • Links to all relevant source code repositories\n The Kanbas application should include a link to navigate back to the landing page."
@@ -28,24 +23,24 @@ export default function AssignmentEditor() {
 
       {/* Points */}
       <div className="mb-3 d-flex gap-2 align-items-center justify-content-end">
-        <label htmlFor="exampleFormControlInput2" className="form-label">
+        <label htmlFor="wd-points" className="form-label">
           Points
         </label>
         <input
           type="text"
           className="form-control w-75"
-          id="exampleFormControlInput2"
+          id="wd-points"
           value={100}
         />
       </div>
 
       {/* Assignment Group */}
       <div className="mb-3 d-flex gap-2 align-items-center justify-content-end">
-        <label htmlFor="exampleFormControlInput3" className="form-label">
+        <label htmlFor="wd-group" className="form-label">
           Assignment Group
         </label>
         <select
-          id="exampleFormControlInput3"
+          id="wd-group"
           className="form-select w-75"
           aria-label="Default select example 1"
         >
@@ -58,11 +53,11 @@ export default function AssignmentEditor() {
 
       {/* Display Grade as */}
       <div className="mb-3 d-flex gap-2 align-items-center justify-content-end">
-        <label htmlFor="exampleFormControlInput4" className="form-label">
+        <label htmlFor="wd-display-grade-as" className="form-label">
           Display Grade as
         </label>
         <select
-          id="exampleFormControlInput4"
+          id="wd-display-grade-as"
           className="form-select w-75"
           aria-label="Default select example 2"
         >
@@ -75,12 +70,12 @@ export default function AssignmentEditor() {
 
       {/* Submission Type */}
       <div className="mb-3 gap-2 d-flex justify-content-end">
-        <label htmlFor="exampleFormControlInput5" className="form-label">
+        <label htmlFor="wd-submission-type" className="form-label">
           Submission Type
         </label>
         <div className="border-custom w-75 p-2">
           <select
-            id="exampleFormControlInput5"
+            id="wd-submission-type"
             className="form-select mb-4"
             aria-label="Default select example 3"
           >
@@ -96,9 +91,9 @@ export default function AssignmentEditor() {
                 className="form-check-input"
                 type="checkbox"
                 value="value1"
-                id="textentrycheckboxid"
+                id="wd-text-entry"
               />
-              <label className="form-check-label" htmlFor="textentrycheckboxid">
+              <label className="form-check-label" htmlFor="wd-text-entry">
                 Text Entry
               </label>
             </div>
@@ -108,13 +103,10 @@ export default function AssignmentEditor() {
                 className="form-check-input"
                 type="checkbox"
                 value="value2"
-                id="websiteurlcheckboxid"
+                id="wd-website-url"
                 checked
               />
-              <label
-                className="form-check-label"
-                htmlFor="websiteurlcheckboxid"
-              >
+              <label className="form-check-label" htmlFor="wd-website-url">
                 Website URL
               </label>
             </div>
@@ -124,12 +116,9 @@ export default function AssignmentEditor() {
                 className="form-check-input"
                 type="checkbox"
                 value="value3"
-                id="mediarecordingscheckboxid"
+                id="wd-media-recordings"
               />
-              <label
-                className="form-check-label"
-                htmlFor="mediarecordingscheckboxid"
-              >
+              <label className="form-check-label" htmlFor="wd-media-recordings">
                 Media Recordings
               </label>
             </div>
@@ -139,11 +128,11 @@ export default function AssignmentEditor() {
                 className="form-check-input"
                 type="checkbox"
                 value="value4"
-                id="studentannotationcheckboxid"
+                id="wd-student-annotation"
               />
               <label
                 className="form-check-label"
-                htmlFor="studentannotationcheckboxid"
+                htmlFor="wd-student-annotation"
               >
                 Student Annotation
               </label>
@@ -154,12 +143,9 @@ export default function AssignmentEditor() {
                 className="form-check-input"
                 type="checkbox"
                 value="value5"
-                id="fileuploadscheckboxid"
+                id="wd-file-upload"
               />
-              <label
-                className="form-check-label"
-                htmlFor="fileuploadscheckboxid"
-              >
+              <label className="form-check-label" htmlFor="wd-file-upload">
                 File Uploads
               </label>
             </div>
@@ -172,54 +158,45 @@ export default function AssignmentEditor() {
         <p>Assign</p>
         <div className="border-custom w-75 p-2">
           <div className="mb-3">
-            <label
-              htmlFor="exampleFormControlInput6"
-              className="form-label fw-bold"
-            >
+            <label htmlFor="wd-assign-to" className="form-label fw-bold">
               Assign to
             </label>
             <input
               type="text"
               className="form-control"
-              id="exampleFormControlInput6"
+              id="wd-assign-to"
               value={"Everyone...x"}
             />
           </div>
 
           <div className="mb-3">
-            <label
-              htmlFor="exampleFormControlInput7"
-              className="form-label fw-bold"
-            >
+            <label htmlFor="wd-due-date" className="form-label fw-bold">
               Due
             </label>
             <input
               type="datetime-local"
               className="form-control"
-              id="exampleFormControlInput7"
+              id="wd-due-date"
               value="2018-06-12T19:30"
             />
           </div>
 
           <div className="mb-3 d-flex gap-3">
             <div className="flex-fill">
-              <label
-                htmlFor="exampleFormControlInput8"
-                className="form-label fw-bold"
-              >
+              <label htmlFor="wd-available-from" className="form-label fw-bold">
                 Available from
               </label>
               <input
                 type="datetime-local"
                 className="form-control"
-                id="exampleFormControlInput8"
+                id="wd-available-from"
                 value="2018-07-15T06:10"
               />
             </div>
 
             <div className="flex-fill">
               <label
-                htmlFor="exampleFormControlInput9"
+                htmlFor="wd-available-until"
                 className="form-label fw-bold"
               >
                 Until
@@ -227,7 +204,7 @@ export default function AssignmentEditor() {
               <input
                 type="datetime-local"
                 className="form-control"
-                id="exampleFormControlInput9"
+                id="wd-available-until"
               />
             </div>
           </div>
