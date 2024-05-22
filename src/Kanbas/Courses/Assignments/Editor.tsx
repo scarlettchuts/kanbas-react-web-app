@@ -1,8 +1,8 @@
 export default function AssignmentEditor() {
   return (
-    <>
+    <div id="wd-assignment-editor">
       {/* Assignment Name */}
-      <div id="wd-assignments-editor" className="mb-3">
+      <div className="mb-3">
         <label htmlFor="wd-name" className="form-label">
           Assignment Name
         </label>
@@ -223,9 +223,10 @@ export default function AssignmentEditor() {
           Save
         </button>
       </div>
-    </>
+    </div>
   );
 }
+
 {
   /* <textarea
         className="form-control mb=3"
