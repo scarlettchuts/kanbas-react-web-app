@@ -5,12 +5,20 @@ import Home from "./Home";
 import Assignments from "./Assignments";
 import Grades from "./Grades";
 import AssignmentEditor from "./Assignments/Editor";
+import { GiHamburgerMenu } from "react-icons/gi";
+
 export default function Courses() {
   return (
     <div id="wd-courses">
-      <h2>Course 1234</h2>
+      <h2 className="red-c41616">
+        <GiHamburgerMenu
+          className="position-relative me-4"
+          style={{ bottom: "1px" }}
+        />
+        Course 1234
+      </h2>
       <hr />
-      <div className="d-flex">
+      <div className="d-flex gap-5">
         <div className="d-none d-md-block">
           <CoursesNavigation />
         </div>

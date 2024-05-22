@@ -1,196 +1,279 @@
 export default function AssignmentEditor() {
   return (
-    <div className="mb-3">
-      <div id="wd-assignments-editor" className="mb-3">
-        <label form="wd-name" className="form-label mb-3">
-          <b>Assignment Name</b>
+    <>
+      {/* Assignment Name */}
+      <div className="mb-3">
+        <label htmlFor="exampleFormControlInput1" className="form-label">
+          Assignment Name
         </label>
-        <br />
         <input
-          className="form-control "
-          id="wd-name"
-          placeholder="A1 - ENV + HTML"
+          type="text"
+          className="form-control"
+          id="exampleFormControlInput1"
+          value={"A1"}
         />
       </div>
-      <textarea
-        className="form-control mb=3"
-        id="wd-description"
-        rows={5}
-        cols={45}
-      >
-        The assignment is available online. Submit a link to the landing page of
-        your Web application running on Netlify. The landing page should include
-        the following: Your full name and section Links to each of the lab
-        assignments Link to the Kanbas application Links to all relevant source
-        code repositories The Kanbas application should include a link to
-        navigate back to the landing page.
-      </textarea>
-      <table className="mt-3 mb-3">
-        <tr>
-          <td>
-            <div className="col-auto">
-              <label form="input-point" className="col-form-label">
-                Points
-              </label>
-            </div>
-          </td>
-          <td>
-            <div className="col-auto">
-              <input id="input-point" className="form-control" />
-            </div>
-            <div className="col-auto"></div>
-          </td>
-        </tr>
-        <br />
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-group">Assignment Group</label>
-          </td>
-          <td>
-            <select className="form-select" aria-label="Default select example">
-              <option selected>ASSIGNMENTS</option>
-              <option value="1">A1</option>
-              <option value="2">A2</option>
-              <option value="3">A3</option>
-            </select>
-          </td>
-        </tr>
-        <br />
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-display-grade-as">Display Grade as</label>
-          </td>
-          <td>
-            <select className="form-select" aria-label="Default select example">
-              <option selected>Percentage</option>
-              <option value="1">Percentage</option>
-            </select>
-          </td>
-        </tr>
-        <br />
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-submission-type">Submission Type</label>
-          </td>
-          <td>
-            <select className="form-select" aria-label="Default select example">
-              <option selected>Online</option>
-              <option value="1">Online</option>
-            </select>
-            <br />
-            <br />
-            <label>
-              <b>Online Entry Options</b>
-            </label>
-            <br />
-            <div className="form-check">
+
+      {/* Textarea */}
+      <div className="mb-3">
+        <textarea
+          className="form-control"
+          id="exampleFormControlTextarea1"
+          rows={10}
+          value={
+            "The assignment is available online\n Submit a link to the landing page of your Web application running on Netlify\n\n The landing page should include the following:\n • Your full name and section\n • Links to each of the lab assignments\n • Link to the Kanbas application\n • Links to all relevant source code repositories\n The Kanbas application should include a link to navigate back to the landing page."
+          }
+        />
+      </div>
+
+      {/* Points */}
+      <div className="mb-3 d-flex gap-2 align-items-center justify-content-end">
+        <label htmlFor="exampleFormControlInput2" className="form-label">
+          Points
+        </label>
+        <input
+          type="text"
+          className="form-control w-75"
+          id="exampleFormControlInput2"
+          value={100}
+        />
+      </div>
+
+      {/* Assignment Group */}
+      <div className="mb-3 d-flex gap-2 align-items-center justify-content-end">
+        <label htmlFor="exampleFormControlInput3" className="form-label">
+          Assignment Group
+        </label>
+        <select
+          id="exampleFormControlInput3"
+          className="form-select w-75"
+          aria-label="Default select example 1"
+        >
+          <option selected>ASSIGNMENTS</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </div>
+
+      {/* Display Grade as */}
+      <div className="mb-3 d-flex gap-2 align-items-center justify-content-end">
+        <label htmlFor="exampleFormControlInput4" className="form-label">
+          Display Grade as
+        </label>
+        <select
+          id="exampleFormControlInput4"
+          className="form-select w-75"
+          aria-label="Default select example 2"
+        >
+          <option selected>Percentage</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </div>
+
+      {/* Submission Type */}
+      <div className="mb-3 gap-2 d-flex justify-content-end">
+        <label htmlFor="exampleFormControlInput5" className="form-label">
+          Submission Type
+        </label>
+        <div className="border-custom w-75 p-2">
+          <select
+            id="exampleFormControlInput5"
+            className="form-select mb-4"
+            aria-label="Default select example 3"
+          >
+            <option selected>Online</option>
+            <option value="1">In-Person</option>
+          </select>
+
+          <div>
+            <p className="fw-bold">Online Entry Options</p>
+
+            <div className="form-check mb-3">
               <input
                 className="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDefault"
+                value="value1"
+                id="textentrycheckboxid"
               />
-              <label className="form-check-label" form="flexCheckDefault">
+              <label className="form-check-label" htmlFor="textentrycheckboxid">
                 Text Entry
               </label>
             </div>
-            <div className="form-check">
+
+            <div className="form-check mb-3">
               <input
                 className="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDefault"
+                value="value2"
+                id="websiteurlcheckboxid"
                 checked
               />
-              <label className="form-check-label" form="flexCheckDefault">
+              <label
+                className="form-check-label"
+                htmlFor="websiteurlcheckboxid"
+              >
                 Website URL
               </label>
             </div>
-            <div className="form-check">
+
+            <div className="form-check mb-3">
               <input
                 className="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDefault"
+                value="value3"
+                id="mediarecordingscheckboxid"
               />
-              <label className="form-check-label" form="flexCheckDefault">
+              <label
+                className="form-check-label"
+                htmlFor="mediarecordingscheckboxid"
+              >
                 Media Recordings
               </label>
             </div>
-            <div className="form-check">
+
+            <div className="form-check mb-3">
               <input
                 className="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDefault"
-                checked
+                value="value4"
+                id="studentannotationcheckboxid"
               />
-              <label className="form-check-label" form="flexCheckDefault">
+              <label
+                className="form-check-label"
+                htmlFor="studentannotationcheckboxid"
+              >
                 Student Annotation
               </label>
             </div>
-            <div className="form-check">
+
+            <div className="form-check mb-3">
               <input
                 className="form-check-input"
                 type="checkbox"
-                value=""
-                id="flexCheckDefault"
+                value="value5"
+                id="fileuploadscheckboxid"
               />
-              <label className="form-check-label" form="flexCheckDefault">
+              <label
+                className="form-check-label"
+                htmlFor="fileuploadscheckboxid"
+              >
                 File Uploads
               </label>
             </div>
-          </td>
-        </tr>
-        <br />
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-assign-to">Assign</label>
-          </td>
-          <td>
-            <label htmlFor="wd-assign-to">Assign to</label>
-            <br />
-            <input id="wd-assign-to" value={"everyone"} />
-            <br />
-            <br />
-            <label htmlFor="wd-due-date">Due</label>
-            <br />
-            <input type="date" id="wd-due-date" value="2024-05-13" />
-            <br />
-            <br />
-            <tr>
-              <td>
-                <label htmlFor="wd-available-from">Available from</label>
-              </td>
-              <td>
-                <label htmlFor="wd-until">Until</label>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input type="date" id="wd-available-from" value="2024-05-06" />
-              </td>
-              <td>
-                <input type="date" id="wd-until" value="2024-05-20" />
-              </td>
-            </tr>
-          </td>
-        </tr>
-        <td colSpan={2}>
-          <hr />
-        </td>
-        <tr>
-          <td></td>
-          <td align="right" valign="top">
-            <div className="float-end">
-              <button className="btn btn-lg btn-secondary border-gray">
-                Cancel
-              </button>
-              <button className="btn btn-lg btn-danger border-red">Save</button>
+          </div>
+        </div>
+      </div>
+
+      {/* Assign */}
+      <div className="mb-3 gap-2 d-flex justify-content-end">
+        <p>Assign</p>
+        <div className="border-custom w-75 p-2">
+          <div className="mb-3">
+            <label
+              htmlFor="exampleFormControlInput6"
+              className="form-label fw-bold"
+            >
+              Assign to
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="exampleFormControlInput6"
+              value={"Everyone...x"}
+            />
+          </div>
+
+          <div className="mb-3">
+            <label
+              htmlFor="exampleFormControlInput7"
+              className="form-label fw-bold"
+            >
+              Due
+            </label>
+            <input
+              type="datetime-local"
+              className="form-control"
+              id="exampleFormControlInput7"
+              value="2018-06-12T19:30"
+            />
+          </div>
+
+          <div className="mb-3 d-flex gap-3">
+            <div className="flex-fill">
+              <label
+                htmlFor="exampleFormControlInput8"
+                className="form-label fw-bold"
+              >
+                Available from
+              </label>
+              <input
+                type="datetime-local"
+                className="form-control"
+                id="exampleFormControlInput8"
+                value="2018-07-15T06:10"
+              />
             </div>
-          </td>
-        </tr>
-      </table>
-    </div>
+
+            <div className="flex-fill">
+              <label
+                htmlFor="exampleFormControlInput9"
+                className="form-label fw-bold"
+              >
+                Until
+              </label>
+              <input
+                type="datetime-local"
+                className="form-control"
+                id="exampleFormControlInput9"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr className="my-3" />
+
+      {/* Cancel and Save button */}
+      <div className="d-flex justify-content-end mb-3">
+        <button type="button" className="btn btn-secondary">
+          Cancel
+        </button>
+
+        <button type="button" className="btn btn-danger">
+          Save
+        </button>
+      </div>
+    </>
   );
+}
+{
+  /* <textarea
+        className="form-control mb=3"
+        id="wd-description"
+        rows={5}
+        // cols={45}
+      >
+        <div>
+          <p>
+            The assignment is <span className="red-text">available online</span>
+          </p>
+
+          <p>
+            Submit a link to the landing page of your Web application running on
+            Netlify.{" "}
+          </p>
+          <ul>The landing page should include the following:</ul>
+          <li>Your full name and section</li>
+          <li>Links to each of the lab assignments</li>
+          <li>Link to the Kanbas application</li>
+          <li>Links to all relevant source code repositories</li>
+          <p>
+            The Kanbas application should include a link to navigate back to the
+            landing page.
+          </p>
+        </div>
+      </textarea> */
 }

@@ -3,8 +3,8 @@ import CourseStatus from "./Status";
 
 export default function Home() {
   return (
-    <div id="wd-home" className="d-flex">
-      <div className="flex-fill me-5">
+    <div id="wd-home" className="d-flex gap-5">
+      <div className="flex-fill">
         <Modules />
       </div>
       <div className="d-none d-xl-block">
