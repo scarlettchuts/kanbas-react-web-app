@@ -3,23 +3,22 @@ import { GrLogin } from "react-icons/gr";
 import GradesControls from "./GradesControls";
 import { useParams } from "react-router";
 import { assignments, enrollments, users, grades } from "../../Database";
-import { log } from "console";
 
 export default function Modules() {
   const { cid } = useParams();
 
-  const enrolledUsers = enrollments
+  const enrolledStudents = enrollments
     .filter((course) => course.course === cid)
-    .map((user) => user.user);
-
-  const enrolledStudents = enrolledUsers.map((userId) => {
-    const user = users.find((userData) => userData._id === userId);
-    return {
-      studentId: user?._id,
-      firstName: user?.firstName,
-      lastName: user?.lastName,
-    };
-  });
+    .map((enrolledStudent) => {
+      const user = users.find(
+        (userData) => userData._id === enrolledStudent.user
+      );
+      return {
+        studentId: user?._id,
+        firstName: user?.firstName,
+        lastName: user?.lastName,
+      };
+    });
 
   // console.log(`enrolledStudents: ${JSON.stringify(enrolledStudents)}`);
 
@@ -28,28 +27,26 @@ export default function Modules() {
     .map((assignmentInfo) => assignmentInfo._id);
 
   const eachStudentGrades = enrolledStudents.map((student) => {
-    const userAssignments = grades.filter(
-      (grade) =>
-        grade.student === student.studentId &&
-        assignmentIds.includes(grade.assignment)
-    );
-    console.log(`userAssignments: ${JSON.stringify(userAssignments)}`);
-
-    const formattedAssignments = userAssignments.map((assignment) => {
-      return {
+    const studentAssignmentAndGradeInfo = grades
+      .filter(
+        (grade) =>
+          grade.student === student.studentId &&
+          assignmentIds.includes(grade.assignment)
+      )
+      .map((assignment) => ({
         assignment: assignment.assignment,
         grade: assignment.grade,
-      };
-    });
+      }));
 
     // console.log(
-    //   `formattedAssignments: ${JSON.stringify(formattedAssignments)}`
+    //   `studentAssignmentAndGradeInfo: ${JSON.stringify(
+    //     studentAssignmentAndGradeInfo
+    //   )}`
     // );
 
     return {
-      firstName: student.firstName,
-      lastName: student.lastName,
-      assignments: formattedAssignments,
+      ...student,
+      assignments: studentAssignmentAndGradeInfo,
     };
   });
 

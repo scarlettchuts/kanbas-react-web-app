@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 export default function AssignmentEditor() {
   const { cid } = useParams();
   const { aid } = useParams();
+  const assignment = assignments.find((assignment) => assignment._id === aid);
 
   return (
     <div id="wd-assignment-editor">
@@ -17,7 +18,7 @@ export default function AssignmentEditor() {
           type="text"
           className="form-control"
           id="wd-name"
-          value={assignments.find((assignment) => assignment._id === aid)?._id}
+          value={`${assignment?._id} - ${assignment?.title}`}
         />
       </div>
 
