@@ -1,8 +1,60 @@
 import { LuFilter } from "react-icons/lu";
 import { GrLogin } from "react-icons/gr";
 import GradesControls from "./GradesControls";
+import { useParams } from "react-router";
+import { assignments, enrollments, users, grades } from "../../Database";
+import { log } from "console";
 
 export default function Modules() {
+  const { cid } = useParams();
+
+  const enrolledUsers = enrollments
+    .filter((course) => course.course === cid)
+    .map((user) => user.user);
+
+  const enrolledStudents = enrolledUsers.map((userId) => {
+    const user = users.find((userData) => userData._id === userId);
+    return {
+      studentId: user?._id,
+      firstName: user?.firstName,
+      lastName: user?.lastName,
+    };
+  });
+
+  // console.log(`enrolledStudents: ${JSON.stringify(enrolledStudents)}`);
+
+  const assignmentIds = assignments
+    .filter((course) => course.course === cid)
+    .map((assignmentInfo) => assignmentInfo._id);
+
+  const eachStudentGrades = enrolledStudents.map((student) => {
+    const userAssignments = grades.filter(
+      (grade) =>
+        grade.student === student.studentId &&
+        assignmentIds.includes(grade.assignment)
+    );
+    console.log(`userAssignments: ${JSON.stringify(userAssignments)}`);
+
+    const formattedAssignments = userAssignments.map((assignment) => {
+      return {
+        assignment: assignment.assignment,
+        grade: assignment.grade,
+      };
+    });
+
+    // console.log(
+    //   `formattedAssignments: ${JSON.stringify(formattedAssignments)}`
+    // );
+
+    return {
+      firstName: student.firstName,
+      lastName: student.lastName,
+      assignments: formattedAssignments,
+    };
+  });
+
+  // console.log(eachStudentGrades);
+
   return (
     <div>
       <div id="wd-Grades">
@@ -16,10 +68,13 @@ export default function Modules() {
               <b>Student Names</b>
             </label>
             <select className="form-select" aria-label="Default select example">
-              <option selected>Search students</option>
-              <option value="1">Andy</option>
-              <option value="2">Bob</option>
-              <option value="3">Charlie</option>
+              {enrolledStudents.map((student) => {
+                return (
+                  <option value={student.studentId}>
+                    {student.firstName} {student.lastName}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="flex-fill">
@@ -27,10 +82,9 @@ export default function Modules() {
               <b>Assignment Names</b>
             </label>
             <select className="form-select" aria-label="Default select example">
-              <option selected>Search assignment</option>
-              <option value="1">A1</option>
-              <option value="2">A2</option>
-              <option value="3">A3</option>
+              {assignmentIds.map((assignment) => {
+                return <option value={assignment}>{assignment}</option>;
+              })}
             </select>
           </div>
         </div>
@@ -48,133 +102,35 @@ export default function Modules() {
           <thead>
             <tr>
               <th>Student Name</th>
-              <th style={{ textAlign: "center" }}>
-                <h6>A1 SETUP</h6>
-                <h6>Out of 100</h6>
-              </th>
-              <th style={{ textAlign: "center" }}>
-                <h6>A2 HTML</h6>
-                <h6>Out of 100</h6>
-              </th>
-              <th style={{ textAlign: "center" }}>
-                <h6>A3 CSS</h6>
-                <h6>Out of 100</h6>
-              </th>
-              <th style={{ textAlign: "center" }}>
-                <h6>A4 BOOTSTRAP</h6>
-                <h6>Out of 100</h6>
-              </th>
+              {assignments
+                .filter((assignment) => assignment.course === cid)
+                .map((assignment) => (
+                  <th className="text-center">
+                    {assignment._id} {assignment.title}
+                    <h6>Out of 100</h6>
+                  </th>
+                ))}
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <p>
-                  <span className="red-text">Jane Adams</span>
-                </p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>100%</p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>96.67%</p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>92.18%</p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>66.22%</p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p>
-                  <span className="red-text">Christina Allen</span>
-                </p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>100%</p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>100%</p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>100%</p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>100%</p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p>
-                  <span className="red-text">Samreen Ansari</span>
-                </p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>100%</p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>100%</p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>100%</p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>100%</p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p>
-                  <span className="red-text">Han Bao</span>
-                </p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>100%</p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>100%</p>
-              </td>
-              <td
-                style={{
-                  textAlign: "center",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <input
-                  className="form-control w-50"
-                  type="text"
-                  id="table-input"
-                />
-                <button type="button" className="btn btn-light">
-                  <GrLogin className="m-0 fs-4" />
-                </button>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>98.99%</p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p>
-                  <span className="red-text">Siran Cao</span>
-                </p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>100%</p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>100%</p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>100%</p>
-              </td>
-              <td style={{ textAlign: "center" }}>
-                <p>100%</p>
-              </td>
-            </tr>
+            {eachStudentGrades.map((studentInfo) => {
+              return (
+                <tr>
+                  <td>
+                    <p className="red-text">
+                      {studentInfo.firstName} {studentInfo.lastName}
+                    </p>
+                  </td>
+                  {studentInfo.assignments.map((eachAssignmentGrade) => {
+                    return (
+                      <td className="text-center">
+                        {eachAssignmentGrade.grade}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

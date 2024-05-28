@@ -7,8 +7,13 @@ import AssignmentControlButtons from "./AssignmentControlButtons";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import AssignmentButtons from "./AssignmentButtons";
+import { useParams } from "react-router";
+import { assignments } from "../../Database";
+import { Link } from "react-router-dom";
 
 export default function Assignments() {
+  const { cid } = useParams();
+
   return (
     <div id="wd-assignments">
       {/* searchbar and two buttons */}
@@ -46,60 +51,28 @@ export default function Assignments() {
       </div>
       <div className="collapse" id="collapseExample">
         <ul className="wd-lessons list-group rounded-0">
-          <li className="wd-lesson list-group-item d-flex align-items-center solid-green-5px">
-            <BsGripVertical className="me-3 fs-3" />
-            <GrNotes className="me-3 fs-4" />
-            <div className="flex-fill m-2">
-              <a
-                className="wd-assignment-link"
-                href="#/Kanbas/Courses/1234/Assignments/123"
-              >
-                A1 - ENV + HTML
-              </a>
-              <p className="m-0">
-                <span className="red-text">Multiple Modules</span> |{" "}
-                <b>Not available until</b> May 6 at 12:00am |<b> Due</b> May 13
-                at 11:59pm | 100 pts
-              </p>
-            </div>
-            <AssignmentButtons />
-          </li>
-          <li className="wd-lesson list-group-item d-flex align-items-center solid-green-5px">
-            <BsGripVertical className="me-3 fs-3" />
-            <GrNotes className="me-3 fs-4" />
-            <div className="flex-fill m-2">
-              <a
-                className="wd-assignment-link"
-                href="#/Kanbas/Courses/1234/Assignments/123"
-              >
-                A2 - CSS + BOOTSTRAP
-              </a>
-              <p className="m-0">
-                <span className="red-text">Multiple Modules</span> |{" "}
-                <b>Not available until</b> May 13 at 12:00am |<b> Due</b> May 20
-                at 11:59pm | 100 pts
-              </p>
-            </div>
-            <LessonControlButtons />
-          </li>
-          <li className="wd-lesson list-group-item d-flex align-items-center solid-green-5px">
-            <BsGripVertical className="me-3 fs-3" />
-            <GrNotes className="me-3 fs-4" />
-            <div className="flex-fill m-2">
-              <a
-                className="wd-assignment-link"
-                href="#/Kanbas/Courses/1234/Assignments/123"
-              >
-                A3 - JAVASCRIPT + REACT
-              </a>
-              <p className="m-0">
-                <span className="red-text">Multiple Modules</span> |{" "}
-                <b>Not available until</b> May 20 at 12:00am |<b> Due</b> May 27
-                at 11:59pm | 100 pts
-              </p>
-            </div>
-            <LessonControlButtons />
-          </li>
+          {assignments
+            .filter((item) => item.course === cid)
+            .map((assignment) => (
+              <li className="wd-lesson list-group-item d-flex align-items-center solid-green-5px">
+                <BsGripVertical className="me-3 fs-3" />
+                <GrNotes className="me-3 fs-4" />
+                <div className="flex-fill m-2">
+                  <Link
+                    className="wd-assignment-link"
+                    to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
+                  >
+                    {assignment._id}
+                  </Link>
+                  <p className="m-0">
+                    <span className="red-text">Multiple Modules</span> |{" "}
+                    <b>Not available until</b> May 6 at 12:00am |<b> Due</b> May
+                    13 at 11:59pm | 100 pts
+                  </p>
+                </div>
+                <AssignmentButtons />
+              </li>
+            ))}
         </ul>
       </div>
     </div>

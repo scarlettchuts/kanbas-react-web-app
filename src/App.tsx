@@ -8,7 +8,7 @@ import Kanbas from "./Kanbas";
 function App() {
   return (
     <HashRouter>
-      <div className="h-100">
+      <div className="">
         <Routes>
           <Route path="/" element={<Navigate to="Labs" />} />
           <Route path="/Labs/*" element={<Labs />} />

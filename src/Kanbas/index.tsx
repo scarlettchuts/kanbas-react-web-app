@@ -6,16 +6,19 @@ import "./styles.css";
 
 export default function Kanbas() {
   return (
-    <div id="wd-kanbas" className="h-100">
-      <div className="d-flex h-100 gap-5">
-        <div className="d-none d-md-block bg-black">
+    <div id="wd-kanbas" className="">
+      <div className="">
+        <div className="d-none d-md-block bg-black sticky-side-navigation">
           <KanbasNavigation />
         </div>
-        <div className="flex-fill me-3">
+        <div className="custom-margins">
           <Routes>
             <Route path="/" element={<Navigate to="Dashboard" />} />
+            <Route path="Account" element={<h1>Account</h1>} />
             <Route path="Dashboard" element={<Dashboard />} />
-            <Route path="Courses/:id/*" element={<Courses />} />
+            <Route path="Courses/:cid/*" element={<Courses />} />
+            <Route path="Calendar" element={<h1>Calendar</h1>} />
+            <Route path="Inbox" element={<h1>Inbox</h1>} />
           </Routes>
         </div>
       </div>

@@ -45,3 +45,26 @@ body * {
 .solid-green-5px {
   border-left: 5px solid green;
 }
+
+.border-custom {
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+}
+
+.sticky-side-navigation {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.custom-margins {
+  margin-left: 1em;
+}
+
+@media (min-width: 768px) {
+  .custom-margins {
+    margin-left: 8em;
+    margin-right: 3em;
+  }
+}
