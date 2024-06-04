@@ -42,6 +42,14 @@ body * {
   color: #c41616;
 }
 
+.grey-4c5860 {
+  color: #4c5860;
+}
+
+.font-small {
+  font-size: 0.8rem;
+}
+
 .solid-green-5px {
   border-left: 5px solid green;
 }

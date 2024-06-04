@@ -8,6 +8,8 @@ import Kanbas from "./Kanbas";
 function App() {
   return (
     <HashRouter>
+      <h1>hello</h1>
+
       <div className="">
         <Routes>
           <Route path="/" element={<Navigate to="Labs" />} />

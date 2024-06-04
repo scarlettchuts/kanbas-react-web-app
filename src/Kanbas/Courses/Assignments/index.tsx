@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { BsGripVertical } from "react-icons/bs";
@@ -7,12 +7,17 @@ import AssignmentControlButtons from "./AssignmentControlButtons";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import AssignmentButtons from "./AssignmentButtons";
-import { useParams } from "react-router";
-import { assignments } from "../../Database";
+import { useNavigate, useParams } from "react-router";
+// import { assignments } from "../../Database";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
 
 export default function Assignments() {
   const { cid } = useParams();
+  const navigate = useNavigate();
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const [itemToRemove, setItemToRemove] = useState("");
 
   return (
     <div id="wd-assignments">
@@ -31,7 +36,10 @@ export default function Assignments() {
             <FaPlus />
             Group
           </button>
-          <button className="btn btn-lg btn-danger">
+          <button
+            className="btn btn-lg btn-danger"
+            onClick={() => navigate(`/Kanbas/Courses/${cid}/Assignments/new`)}
+          >
             <FaPlus />
             Assignment
           </button>
@@ -52,9 +60,13 @@ export default function Assignments() {
       <div className="collapse" id="collapseExample">
         <ul className="wd-lessons list-group rounded-0">
           {assignments
-            .filter((item) => item.course === cid)
-            .map((assignment) => (
-              <li className="wd-lesson list-group-item d-flex align-items-center solid-green-5px">
+            .filter((item: any) => item.course === cid)
+            .map((assignment: any) => (
+              <li
+                className="wd-lesson list-group-item list-group-item-action d-flex align-items-center solid-green-5px"
+                key={assignment._id}
+                onClick={() => setItemToRemove(assignment._id)}
+              >
                 <BsGripVertical className="me-3 fs-3" />
                 <GrNotes className="me-3 fs-4" />
                 <div className="flex-fill m-2">
@@ -62,18 +74,26 @@ export default function Assignments() {
                     className="wd-assignment-link"
                     to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
                   >
-                    {assignment._id}
+                    {assignment._id} - {assignment.title}
                   </Link>
                   <p className="m-0">
-                    <span className="red-text">Multiple Modules</span> |{" "}
-                    <b>Not available until</b> May 6 at 12:00am |<b> Due</b> May
-                    13 at 11:59pm | 100 pts
+                    <span className="red-text">Description</span>:{" "}
+                    {assignment.description}
+                  </p>
+                  <p className="m-0 grey-4c5860 font-small">
+                    <span className="fw-bold">Available from</span>{" "}
+                    {assignment.fromDate} |{" "}
+                    <span className="fw-bold">Available until</span>{" "}
+                    {assignment.untilDate} |{" "}
+                    <span className="fw-bold"> Due</span> {assignment.dueDate} |{" "}
+                    {assignment.points} pts
                   </p>
                 </div>
                 <AssignmentButtons />
               </li>
             ))}
         </ul>
+        <ConfirmDeleteModal itemToRemove={itemToRemove} />
       </div>
     </div>
   );

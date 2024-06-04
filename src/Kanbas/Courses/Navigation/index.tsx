@@ -18,6 +18,7 @@ export default function CoursesNavigation() {
       {links.map((element) => (
         <Link
           to={`/Kanbas/Courses/${cid}/${element}`}
+          key={element}
           className={`list-group-item border-0 ${
             pathname.includes(element)
               ? "text-dark border-start border-2 border-dark"
