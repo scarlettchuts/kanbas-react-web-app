@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { BsGripVertical } from "react-icons/bs";
@@ -9,15 +9,32 @@ import LessonControlButtons from "../Modules/LessonControlButtons";
 import AssignmentButtons from "./AssignmentButtons";
 import { useNavigate, useParams } from "react-router";
 // import { assignments } from "../../Database";
+import * as client from "./client";
+import {
+  setAssignments,
+  addAssignment,
+  updateAssignment,
+  deleteAssignment,
+} from "./reducer";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
 
 export default function Assignments() {
   const { cid } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
   const [itemToRemove, setItemToRemove] = useState("");
+
+  const fetchAssignments = async () => {
+    const assignments = await client.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
 
   return (
     <div id="wd-assignments">

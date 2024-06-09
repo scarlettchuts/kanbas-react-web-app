@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { addAssignment, updateAssignment, deleteAssignment } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
+import * as client from "./client";
 
 export default function AssignmentEditor() {
   const { cid } = useParams();
@@ -22,31 +23,39 @@ export default function AssignmentEditor() {
   const [fromDate, setFromDate] = useState(assignment?.fromDate);
   const [untilDate, setUntilDate] = useState(assignment?.untilDate);
 
+  const createAssignment = async (assignment: any) => {
+    const newAssignment = await client.createAssignment(
+      cid as string,
+      assignment
+    );
+    dispatch(addAssignment(newAssignment));
+  };
+
+  const saveAssignment = async (assignment: any) => {
+    const status = await client.updateAssignment(assignment);
+    dispatch(updateAssignment(assignment));
+  };
+
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (location.pathname.includes("new")) {
-      dispatch(
-        addAssignment({
-          title,
-          course: cid,
-          description,
-          points,
-          dueDate,
-          fromDate,
-          untilDate,
-        })
-      );
-    }
-    dispatch(
-      updateAssignment({
-        ...assignment,
+      createAssignment({
         title,
         description,
         points,
         dueDate,
         fromDate,
         untilDate,
-      })
-    );
+      });
+    }
+    saveAssignment({
+      ...assignment,
+      title,
+      description,
+      points,
+      dueDate,
+      fromDate,
+      untilDate,
+    });
   };
 
   return (

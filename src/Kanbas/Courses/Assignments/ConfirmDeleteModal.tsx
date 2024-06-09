@@ -1,11 +1,17 @@
 import { useDispatch } from "react-redux";
 import { deleteAssignment } from "./reducer";
+import * as client from "./client";
 
 const ConfirmDeleteModal = ({ itemToRemove }: { itemToRemove: string }) => {
   const dispatch = useDispatch();
 
+  const removeAssignment = async (assignmentIdObj: any) => {
+    await client.deleteAssignment(assignmentIdObj);
+    dispatch(deleteAssignment(assignmentIdObj));
+  };
+
   const handleClick = () => {
-    dispatch(deleteAssignment({ assignmentId: itemToRemove }));
+    removeAssignment({ assignmentId: itemToRemove });
   };
 
   return (
@@ -40,7 +46,6 @@ const ConfirmDeleteModal = ({ itemToRemove }: { itemToRemove: string }) => {
             </button>
             <button
               onClick={handleClick}
-              //   onClick={() => console.log(itemToRemove)}
               type="button"
               data-bs-dismiss="modal"
               className="btn btn-danger"
