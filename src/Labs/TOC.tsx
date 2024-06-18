@@ -80,7 +80,7 @@ export default function TOC() {
       <li className="nav-item">
         <a
           id="wd-github"
-          href="https://kanbas-node-server-app-n0zd.onrender.com"
+          href="https://kanbas-node-server-app-1-56i7.onrender.com/"
           className="nav-link"
         >
           Render
