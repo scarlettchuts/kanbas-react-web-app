@@ -20,14 +20,11 @@ export default function Modules() {
   const [moduleName, setModuleName] = useState("");
   const { modules } = useSelector((state: any) => state.modulesReducer);
   const dispatch = useDispatch();
+
   const fetchModules = async () => {
     const modules = await client.findModulesForCourse(cid as string);
     dispatch(setModules(modules));
   };
-
-  useEffect(() => {
-    fetchModules();
-  }, []);
 
   const createModule = async (module: any) => {
     const newModule = await client.createModule(cid as string, module);
@@ -40,9 +37,14 @@ export default function Modules() {
   };
 
   const saveModule = async (module: any) => {
+    console.log(module);
     const status = await client.updateModule(module);
     dispatch(updateModule(module));
   };
+
+  useEffect(() => {
+    fetchModules();
+  }, []);
 
   return (
     <div>
@@ -94,10 +96,10 @@ export default function Modules() {
                 </div>
                 {module.lessons && (
                   <ul className="wd-lessons list-group rounded-0">
-                    {module.lessons.map((lesson: any) => (
+                    {module.lessons.map((lesson: any, idx: number) => (
                       <li
                         className="wd-lesson list-group-item list-group-item-action p-3 ps-1 solid-green-5px"
-                        key={lesson._id}
+                        key={idx}
                       >
                         <BsGripVertical className="me-2 fs-3" />
                         {lesson.name}

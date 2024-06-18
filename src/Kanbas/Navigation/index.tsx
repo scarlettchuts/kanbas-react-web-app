@@ -45,9 +45,10 @@ export default function KanbasNavigation() {
         <br />
         Account
       </Link>
-      {links.map((link) => (
+      {links.map((link, idx) => (
         <Link
-          key={link.path}
+          // key={link.path}
+          key={idx}
           to={link.path}
           className={`list-group-item bg-black text-center border-0
               ${

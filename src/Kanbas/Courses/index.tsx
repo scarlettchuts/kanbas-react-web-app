@@ -6,6 +6,8 @@ import Assignments from "./Assignments";
 import Grades from "./Grades";
 import AssignmentEditor from "./Assignments/Editor";
 import { GiHamburgerMenu } from "react-icons/gi";
+import Quizzes from "./Quizzes";
+import PeopleTable from "./People/Table";
 
 export default function Courses({ courses }: { courses: any[] }) {
   const { cid } = useParams();
@@ -33,7 +35,10 @@ export default function Courses({ courses }: { courses: any[] }) {
             <Route path="Modules" element={<Modules />} />
             <Route path="Assignments" element={<Assignments />} />
             <Route path="Assignments/:aid" element={<AssignmentEditor />} />
+            <Route path="Quizzes" element={<Quizzes />} />
             <Route path="Grades" element={<Grades />} />
+            <Route path="People" element={<PeopleTable />} />
+            <Route path="People/:uid" element={<PeopleTable />} />
           </Routes>
         </div>
       </div>

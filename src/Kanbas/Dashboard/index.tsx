@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import * as db from "../Database";
+
 export default function Dashboard({
   courses,
   course,
@@ -16,35 +17,6 @@ export default function Dashboard({
   deleteCourse: (course: any) => void;
   updateCourse: () => void;
 }) {
-  // const [courses, setCourses] = useState(db.courses);
-  // const [course, setCourse] = useState<any>({
-  //   _id: "0",
-  //   name: "New Course",
-  //   number: "New Number",
-  //   startDate: "2023-09-10",
-  //   endData: "2023-12-15",
-  //   image: "/images/reactjs.webp",
-  //   description: "New Description",
-  // });
-  // const addNewCourse = () => {
-  //   const newCourse = { ...course, _id: new Date().getTime().toString() };
-  //   setCourses([{ ...course, ...newCourse }, ...courses]);
-  // };
-  // const deleteCourse = (courseId: string) => {
-  //   setCourses(courses.filter((course) => course._id !== courseId));
-  // };
-  // const updateCourse = () => {
-  //   setCourses(
-  //     courses.map((c) => {
-  //       if (c._id === course._id) {
-  //         return course;
-  //       } else {
-  //         return c;
-  //       }
-  //     })
-  //   );
-  // };
-
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
@@ -113,12 +85,13 @@ export default function Dashboard({
                     >
                       {course.description}
                     </p>
-                    <Link
+                    {/* <Link
                       to={`/Kanbas/Courses/${course._id}/Home`}
                       className="btn btn-primary"
                     >
                       Go
-                    </Link>
+                    </Link> */}
+                    <button className="btn btn-primary">Go</button>
                     <button
                       onClick={(event) => {
                         event.preventDefault();

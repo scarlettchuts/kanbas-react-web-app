@@ -12,6 +12,7 @@ export default function CoursesNavigation() {
     "Assignments",
     "Quizzes",
     "Grades",
+    "People",
   ];
   return (
     <div id="wd-courses-nagivation" className="list-group fs-5 rounded-0">
