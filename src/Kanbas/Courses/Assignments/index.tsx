@@ -10,12 +10,7 @@ import AssignmentButtons from "./AssignmentButtons";
 import { useNavigate, useParams } from "react-router";
 // import { assignments } from "../../Database";
 import * as client from "./client";
-import {
-  setAssignments,
-  addAssignment,
-  updateAssignment,
-  deleteAssignment,
-} from "./reducer";
+import { setAssignments } from "./reducer";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
@@ -35,6 +30,12 @@ export default function Assignments() {
   useEffect(() => {
     fetchAssignments();
   }, []);
+
+  const formatDate = (date: string | number | Date) => {
+    if (!date) return "";
+    const d = new Date(date);
+    return d.toISOString().split("T")[0];
+  };
 
   return (
     <div id="wd-assignments">
@@ -99,11 +100,11 @@ export default function Assignments() {
                   </p>
                   <p className="m-0 grey-4c5860 font-small">
                     <span className="fw-bold">Available from</span>{" "}
-                    {assignment.fromDate} |{" "}
+                    {formatDate(assignment.fromDate)} |{" "}
                     <span className="fw-bold">Available until</span>{" "}
-                    {assignment.untilDate} |{" "}
-                    <span className="fw-bold"> Due</span> {assignment.dueDate} |{" "}
-                    {assignment.points} pts
+                    {formatDate(assignment.untilDate)} |{" "}
+                    <span className="fw-bold"> Due</span>{" "}
+                    {formatDate(assignment.dueDate)} | {assignment.points} pts
                   </p>
                 </div>
                 <AssignmentButtons />

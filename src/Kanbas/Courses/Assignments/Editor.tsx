@@ -16,12 +16,19 @@ export default function AssignmentEditor() {
   );
   const dispatch = useDispatch();
 
+  // Helper function to format date to YYYY-MM-DD
+  const formatDate = (date: string | number | Date) => {
+    if (!date) return "";
+    const d = new Date(date);
+    return d.toISOString().split("T")[0];
+  };
+
   const [title, setTitle] = useState(assignment?.title);
   const [description, setDescription] = useState(assignment?.description);
   const [points, setPoints] = useState(assignment?.points);
-  const [dueDate, setDueDate] = useState(assignment?.dueDate);
-  const [fromDate, setFromDate] = useState(assignment?.fromDate);
-  const [untilDate, setUntilDate] = useState(assignment?.untilDate);
+  const [dueDate, setDueDate] = useState(formatDate(assignment?.dueDate));
+  const [fromDate, setFromDate] = useState(formatDate(assignment?.fromDate));
+  const [untilDate, setUntilDate] = useState(formatDate(assignment?.untilDate));
 
   const createAssignment = async (assignment: any) => {
     const newAssignment = await client.createAssignment(
@@ -46,16 +53,17 @@ export default function AssignmentEditor() {
         fromDate,
         untilDate,
       });
+    } else {
+      saveAssignment({
+        ...assignment,
+        title,
+        description,
+        points,
+        dueDate,
+        fromDate,
+        untilDate,
+      });
     }
-    saveAssignment({
-      ...assignment,
-      title,
-      description,
-      points,
-      dueDate,
-      fromDate,
-      untilDate,
-    });
   };
 
   return (

@@ -5,13 +5,13 @@ import * as client from "./client";
 const ConfirmDeleteModal = ({ itemToRemove }: { itemToRemove: string }) => {
   const dispatch = useDispatch();
 
-  const removeAssignment = async (assignmentIdObj: any) => {
-    await client.deleteAssignment(assignmentIdObj);
-    dispatch(deleteAssignment(assignmentIdObj));
+  const removeAssignment = async (assignmentId: string) => {
+    await client.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
   };
 
   const handleClick = () => {
-    removeAssignment({ assignmentId: itemToRemove });
+    removeAssignment(itemToRemove);
   };
 
   return (

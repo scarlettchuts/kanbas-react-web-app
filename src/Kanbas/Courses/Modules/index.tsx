@@ -37,7 +37,6 @@ export default function Modules() {
   };
 
   const saveModule = async (module: any) => {
-    console.log(module);
     const status = await client.updateModule(module);
     dispatch(updateModule(module));
   };

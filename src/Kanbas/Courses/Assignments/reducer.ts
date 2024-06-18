@@ -14,7 +14,7 @@ const assignmentsSlice = createSlice({
 
     addAssignment: (state, action) => {
       const newAssignment: any = {
-        _id: new Date().getTime().toString(),
+        // _id: new Date().getTime().toString(),
         title: action.payload.title,
         course: action.payload.course,
         description: action.payload.description,
@@ -31,7 +31,7 @@ const assignmentsSlice = createSlice({
       console.log(action.payload);
 
       state.assignments = state.assignments.filter(
-        (a: any) => a._id !== action.payload.assignmentId
+        (a: any) => a._id !== action.payload
       );
     },
 

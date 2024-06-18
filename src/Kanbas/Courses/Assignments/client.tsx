@@ -9,16 +9,11 @@ export const findAssignmentsForCourse = async (courseId: string) => {
   return response.data;
 };
 
-export const createAssignment = async (courseId: string, assignments: any) => {
+export const createAssignment = async (courseId: string, assignment: any) => {
   const response = await axios.post(
     `${COURSES_API}/${courseId}/assignments`,
-    assignments
+    assignment
   );
-  return response.data;
-};
-
-export const deleteAssignment = async (assignmentId: string) => {
-  const response = await axios.delete(`${ASSIGNMENTS_API}/${assignmentId}`);
   return response.data;
 };
 
@@ -27,5 +22,10 @@ export const updateAssignment = async (assignment: any) => {
     `${ASSIGNMENTS_API}/${assignment._id}`,
     assignment
   );
+  return response.data;
+};
+
+export const deleteAssignment = async (assignmentId: string) => {
+  const response = await axios.delete(`${ASSIGNMENTS_API}/${assignmentId}`);
   return response.data;
 };
