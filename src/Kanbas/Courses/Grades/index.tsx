@@ -1,10 +1,9 @@
 import { LuFilter } from "react-icons/lu";
-import { GrLogin } from "react-icons/gr";
 import GradesControls from "./GradesControls";
 import { useParams } from "react-router";
 import { assignments, enrollments, users, grades } from "../../Database";
 
-export default function Modules() {
+export default function Grades() {
   const { cid } = useParams();
 
   const enrolledStudents = enrollments
@@ -19,8 +18,6 @@ export default function Modules() {
         lastName: user?.lastName,
       };
     });
-
-  // console.log(`enrolledStudents: ${JSON.stringify(enrolledStudents)}`);
 
   const assignmentIds = assignments
     .filter((course) => course.course === cid)
@@ -38,19 +35,11 @@ export default function Modules() {
         grade: assignment.grade,
       }));
 
-    // console.log(
-    //   `studentAssignmentAndGradeInfo: ${JSON.stringify(
-    //     studentAssignmentAndGradeInfo
-    //   )}`
-    // );
-
     return {
       ...student,
       assignments: studentAssignmentAndGradeInfo,
     };
   });
-
-  // console.log(eachStudentGrades);
 
   return (
     <div>

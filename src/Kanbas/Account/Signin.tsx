@@ -6,7 +6,10 @@ import { setCurrentUser } from "./reducer";
 
 export default function Signin() {
   const [error, setError] = useState("");
-  const [credentials, setCredentials] = useState<any>({});
+  const [credentials, setCredentials] = useState<any>({
+    username: "",
+    password: "",
+  });
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

@@ -8,10 +8,15 @@ import AssignmentEditor from "./Assignments/Editor";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Quizzes from "./Quizzes";
 import PeopleTable from "./People/Table";
+import { useSelector } from "react-redux";
+import QuizDetails from "./Quizzes/QuizDetails";
+import QuizEditor from "./Quizzes/QuizEditor";
+import QuizPreview from "./Quizzes/QuizPreview";
 
-export default function Courses({ courses }: { courses: any[] }) {
+export default function Courses() {
   const { cid } = useParams();
-  const course = courses.find((course) => course._id === cid);
+  const { courses } = useSelector((state: any) => state.coursesReducer);
+  const course = courses.find((course: any) => course._id === cid);
   const { pathname } = useLocation();
 
   return (
@@ -36,6 +41,10 @@ export default function Courses({ courses }: { courses: any[] }) {
             <Route path="Assignments" element={<Assignments />} />
             <Route path="Assignments/:aid" element={<AssignmentEditor />} />
             <Route path="Quizzes" element={<Quizzes />} />
+            <Route path="Quizzes/:qid" element={<QuizDetails />} />
+            <Route path="Quizzes/new" element={<QuizEditor />} />
+            <Route path="Quizzes/:qid/edit" element={<QuizEditor />} />
+            <Route path="Quizzes/:qid/preview" element={<QuizPreview />} />
             <Route path="Grades" element={<Grades />} />
             <Route path="People" element={<PeopleTable />} />
             <Route path="People/:uid" element={<PeopleTable />} />

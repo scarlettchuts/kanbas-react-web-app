@@ -6,7 +6,11 @@ import { setCurrentUser } from "./reducer";
 
 export default function Signup() {
   const [error, setError] = useState("");
-  const [user, setUser] = useState<any>({});
+  const [user, setUser] = useState<any>({
+    username: "",
+    password: "",
+    role: "",
+  });
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -19,6 +23,7 @@ export default function Signup() {
       setError(err.response.data.message);
     }
   };
+
   return (
     <div>
       <h1>Sign up</h1>
@@ -40,7 +45,18 @@ export default function Signup() {
         placeholder="password"
       />
 
-      <button onClick={signup} className="btn btn-primary mb-2">
+      <select
+        className="form-select w-25 mb-2"
+        value={user.profile}
+        onChange={(e) => setUser({ ...user, role: e.target.value })}
+      >
+        {/* <option value="USER">User</option> */}
+        {/* <option value="ADMIN">Admin</option> */}
+        <option value="STUDENT">Student</option>
+        <option value="FACULTY">Faculty</option>
+      </select>
+
+      <button onClick={signup} className="btn btn-primary w-100 mb-2">
         Sign up
       </button>
       <br />

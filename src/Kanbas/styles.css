@@ -66,8 +66,19 @@ body * {
   bottom: 0;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .custom-margins {
   margin-left: 1em;
+}
+
+.question-container {
+  border: 1px solid #999; /* Darker border color */
+  padding: 15px; /* Increased padding for spacing */
+  margin-bottom: 15px; /* Increased margin for spacing */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
 }
 
 @media (min-width: 768px) {

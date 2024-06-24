@@ -1,10 +1,10 @@
 import { useLocation, useParams } from "react-router";
-// import { assignments } from "../../Database";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { addAssignment, updateAssignment, deleteAssignment } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
 import * as client from "./client";
+import { formatDate } from "../../utils/DateUtils";
 
 export default function AssignmentEditor() {
   const { cid } = useParams();
@@ -15,13 +15,6 @@ export default function AssignmentEditor() {
     (assignment: any) => assignment._id === aid
   );
   const dispatch = useDispatch();
-
-  // Helper function to format date to YYYY-MM-DD
-  const formatDate = (date: string | number | Date) => {
-    if (!date) return "";
-    const d = new Date(date);
-    return d.toISOString().split("T")[0];
-  };
 
   const [title, setTitle] = useState(assignment?.title);
   const [description, setDescription] = useState(assignment?.description);

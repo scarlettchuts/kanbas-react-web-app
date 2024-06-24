@@ -5,15 +5,14 @@ import { BsGripVertical } from "react-icons/bs";
 import { GrNotes } from "react-icons/gr";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import "bootstrap/dist/css/bootstrap.min.css";
-import LessonControlButtons from "../Modules/LessonControlButtons";
 import AssignmentButtons from "./AssignmentButtons";
 import { useNavigate, useParams } from "react-router";
-// import { assignments } from "../../Database";
 import * as client from "./client";
 import { setAssignments } from "./reducer";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
+import { formatDate } from "../../utils/DateUtils";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -22,20 +21,14 @@ export default function Assignments() {
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
   const [itemToRemove, setItemToRemove] = useState("");
 
-  const fetchAssignments = async () => {
-    const assignments = await client.findAssignmentsForCourse(cid as string);
-    dispatch(setAssignments(assignments));
-  };
-
   useEffect(() => {
-    fetchAssignments();
-  }, []);
+    const fetchAssignments = async () => {
+      const assignments = await client.findAssignmentsForCourse(cid as string);
+      dispatch(setAssignments(assignments));
+    };
 
-  const formatDate = (date: string | number | Date) => {
-    if (!date) return "";
-    const d = new Date(date);
-    return d.toISOString().split("T")[0];
-  };
+    fetchAssignments();
+  }, [cid, dispatch]);
 
   return (
     <div id="wd-assignments">

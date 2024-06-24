@@ -7,19 +7,20 @@ export default function Session({ children }: { children: any }) {
   const [pending, setPending] = useState(true);
   const dispatch = useDispatch();
 
-  const fetchProfile = async () => {
-    try {
-      const currentUser = await client.profile();
-      dispatch(setCurrentUser(currentUser));
-    } catch (err: any) {
-      console.error(err);
-    }
-    setPending(false);
-  };
-
   useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const currentUser = await client.profile();
+        dispatch(setCurrentUser(currentUser));
+      } catch (err: any) {
+        // console.error(err)
+        console.log("not signed in");
+      }
+      setPending(false);
+    };
+
     fetchProfile();
-  }, []);
+  }, [dispatch]);
 
   if (!pending) {
     return children;
