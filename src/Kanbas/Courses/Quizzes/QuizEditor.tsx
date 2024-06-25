@@ -8,6 +8,8 @@ import { FaCheckCircle } from "react-icons/fa";
 import { IoEllipsisVertical } from "react-icons/io5";
 import * as quizClient from "./client";
 import { formatDate } from "../../utils/DateUtils";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const QuizEditor = () => {
   const [activeTab, setActiveTab] = useState("Details");
@@ -40,10 +42,14 @@ const QuizEditor = () => {
   const handleChange = (e: any) => {
     setFormData((prevData) => ({
       ...prevData,
-      [e.target.name]:
-        e.target.name === "points" || e.target.name === "timeLimit"
-          ? Number(e.target.value)
-          : e.target.value,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleDescriptionChange = (value: any) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      description: value,
     }));
   };
 
@@ -78,12 +84,13 @@ const QuizEditor = () => {
         console.log("no quiz found");
         return;
       }
-      console.log(currentQuiz);
       setFormData(currentQuiz);
     };
 
     fetchQuizDetail();
   }, [cid]);
+
+  console.log(formData);
 
   return (
     <>
@@ -132,13 +139,11 @@ const QuizEditor = () => {
                 <label htmlFor="description" className="form-label">
                   Quiz Instructions:
                 </label>
-                <textarea
-                  className="form-control"
-                  id="description"
-                  name="description"
+                <ReactQuill
+                  theme="snow"
                   value={formData.description}
-                  onChange={handleChange}
-                ></textarea>
+                  onChange={handleDescriptionChange}
+                />
               </div>
               <div className="mb-3">
                 <label htmlFor="quizType" className="form-label">
