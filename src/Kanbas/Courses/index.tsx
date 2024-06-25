@@ -12,6 +12,8 @@ import { useSelector } from "react-redux";
 import QuizDetails from "./Quizzes/QuizDetails";
 import QuizEditor from "./Quizzes/QuizEditor";
 import QuizPreview from "./Quizzes/QuizPreview";
+import QuestionEditor from "./Quizzes/Questions/QuestionEditor";
+import QuestionChoiceForm from "./Quizzes/Questions/QuestionChoiceForm";
 
 export default function Courses() {
   const { cid } = useParams();
@@ -48,6 +50,9 @@ export default function Courses() {
             <Route path="Grades" element={<Grades />} />
             <Route path="People" element={<PeopleTable />} />
             <Route path="People/:uid" element={<PeopleTable />} />
+
+            <Route path="what" element={<QuestionEditor />} />
+            <Route path="why" element={<QuestionChoiceForm />} />
           </Routes>
         </div>
       </div>
