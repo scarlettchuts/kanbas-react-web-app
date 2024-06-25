@@ -87,3 +87,7 @@ body * {
     margin-right: 3em;
   }
 }
+
+.mirror {
+  transform: scaleX(-1);
+}

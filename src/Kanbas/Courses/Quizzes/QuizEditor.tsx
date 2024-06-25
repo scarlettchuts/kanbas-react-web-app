@@ -1,27 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import MultipleChoiceEditor from "./MultipleChoiceEditor";
 import TrueFalseEditor from "./TrueFalseEditor";
 import FillInBlanksEditor from "./FillInBlanksEditor";
+import { RiProhibitedLine } from "react-icons/ri";
+import { FaCheckCircle } from "react-icons/fa";
+import { IoEllipsisVertical } from "react-icons/io5";
+import * as quizClient from "./client";
+import { formatDate } from "../../utils/DateUtils";
 
 const QuizEditor = () => {
   const [activeTab, setActiveTab] = useState("Details");
-  const { cid } = useParams();
+  const { cid, qid } = useParams();
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    quizType: "Graded Quiz",
+    quizType: "",
     points: 0,
-    assignmentGroup: "Quizzes",
-    shuffleAnswers: "Yes",
-    timeLimit: 20,
-    multipleAttempts: "No",
+    assignmentGroup: "",
+    shuffleAnswers: "",
+    timeLimit: 0,
+    multipleAttempts: "",
     showCorrectAnswers: "",
     accessCode: "",
-    oneQuestionAtATime: "Yes",
-    webcamRequired: "No",
-    lockQuestionsAfterAnswering: "No",
+    oneQuestionAtATime: "",
+    webcamRequired: "",
+    lockQuestionsAfterAnswering: "",
     dueDate: "",
     availableDate: "",
     untilDate: "",
@@ -32,41 +38,52 @@ const QuizEditor = () => {
   };
 
   const handleChange = (e: any) => {
-    const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: name === "points" || name === "timeLimit" ? Number(value) : value,
+      [e.target.name]:
+        e.target.name === "points" || e.target.name === "timeLimit"
+          ? Number(e.target.value)
+          : e.target.value,
     }));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // Save logic here
-    navigate(`/Kanbas/Courses/${cid}/Quizzes/${123}`);
+    const response = await quizClient.updateQuizForCourse(
+      qid as string,
+      formData
+    );
+    navigate(`/Kanbas/Courses/${cid}/Quizzes/${qid}`);
   };
 
-  const handleSaveAndPublish = () => {
+  const handleSaveAndPublish = async () => {
     // Save and publish logic here
-    navigate(`/Kanbas/Courses/${cid}/Quizzes`);
+    const newFormData = { ...formData, isPublished: true };
+    const response = await quizClient.updateQuizForCourse(
+      qid as string,
+      newFormData
+    );
+    navigate(`/Kanbas/Courses/${cid}/Quizzes/${qid}/preview`);
   };
 
   const handleCancel = () => {
     navigate(`/Kanbas/Courses/${cid}/Quizzes`);
   };
 
-  const [questions, setQuestions] = useState<any>([]);
-
-  const addNewQuestion = (type: string) => {
-    const newQuestion = {
-      questionType: type,
-      questionText: "",
-      points: 0,
-      correctAnswer: "",
-      choices: [],
+  useEffect(() => {
+    const fetchQuizDetail = async () => {
+      const response = await quizClient.findQuizzesForCourse(cid as string);
+      const currentQuiz = response.find((q: any) => q._id === qid);
+      if (!currentQuiz) {
+        console.log("no quiz found");
+        return;
+      }
+      console.log(currentQuiz);
+      setFormData(currentQuiz);
     };
-    setQuestions([...questions, newQuestion]);
-  };
 
-  console.log(questions);
+    fetchQuizDetail();
+  }, [cid]);
 
   return (
     <>
@@ -113,7 +130,7 @@ const QuizEditor = () => {
               </div>
               <div className="mb-3">
                 <label htmlFor="description" className="form-label">
-                  Description
+                  Quiz Instructions:
                 </label>
                 <textarea
                   className="form-control"
@@ -178,11 +195,11 @@ const QuizEditor = () => {
                   className="form-select"
                   id="shuffleAnswers"
                   name="shuffleAnswers"
-                  value={formData.shuffleAnswers}
+                  value={formData.shuffleAnswers.toString()}
                   onChange={handleChange}
                 >
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
                 </select>
               </div>
               <div className="mb-3">
@@ -206,11 +223,11 @@ const QuizEditor = () => {
                   className="form-select"
                   id="multipleAttempts"
                   name="multipleAttempts"
-                  value={formData.multipleAttempts}
+                  value={formData.multipleAttempts.toString()}
                   onChange={handleChange}
                 >
-                  <option value="No">No</option>
-                  <option value="Yes">Yes</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
                 </select>
               </div>
               <div className="mb-3">
@@ -247,11 +264,11 @@ const QuizEditor = () => {
                   className="form-select"
                   id="oneQuestionAtATime"
                   name="oneQuestionAtATime"
-                  value={formData.oneQuestionAtATime}
+                  value={formData.oneQuestionAtATime.toString()}
                   onChange={handleChange}
                 >
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
                 </select>
               </div>
               <div className="mb-3">
@@ -262,11 +279,11 @@ const QuizEditor = () => {
                   className="form-select"
                   id="webcamRequired"
                   name="webcamRequired"
-                  value={formData.webcamRequired}
+                  value={formData.webcamRequired.toString()}
                   onChange={handleChange}
                 >
-                  <option value="No">No</option>
-                  <option value="Yes">Yes</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
                 </select>
               </div>
               <div className="mb-3">
@@ -280,11 +297,11 @@ const QuizEditor = () => {
                   className="form-select"
                   id="lockQuestionsAfterAnswering"
                   name="lockQuestionsAfterAnswering"
-                  value={formData.lockQuestionsAfterAnswering}
+                  value={formData.lockQuestionsAfterAnswering.toString()}
                   onChange={handleChange}
                 >
-                  <option value="No">No</option>
-                  <option value="Yes">Yes</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
                 </select>
               </div>
               <div className="mb-3">
@@ -296,7 +313,7 @@ const QuizEditor = () => {
                   className="form-control"
                   id="dueDate"
                   name="dueDate"
-                  value={formData.dueDate}
+                  value={formatDate(formData.dueDate)}
                   onChange={handleChange}
                 />
               </div>
@@ -309,7 +326,7 @@ const QuizEditor = () => {
                   className="form-control"
                   id="availableDate"
                   name="availableDate"
-                  value={formData.availableDate}
+                  value={formatDate(formData.availableDate)}
                   onChange={handleChange}
                 />
               </div>
@@ -322,7 +339,7 @@ const QuizEditor = () => {
                   className="form-control"
                   id="untilDate"
                   name="untilDate"
-                  value={formData.untilDate}
+                  value={formatDate(formData.untilDate)}
                   onChange={handleChange}
                 />
               </div>
@@ -350,9 +367,9 @@ const QuizEditor = () => {
             </form>
           </div>
         )}
-        {/* {activeTab === "Questions" && <div>Questions content goes here.</div>} */}
+        {activeTab === "Questions" && <div>Questions content goes here.</div>}
 
-        {activeTab === "Questions" && (
+        {/* {activeTab === "Questions" && (
           <div>
             {questions.map((question: any) => (
               <div key={question.id} className="mb-3">
@@ -398,7 +415,7 @@ const QuizEditor = () => {
               Add Fill in the Blanks
             </button>
           </div>
-        )}
+        )} */}
       </div>
     </>
   );

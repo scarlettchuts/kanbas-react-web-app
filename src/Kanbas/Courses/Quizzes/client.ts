@@ -11,3 +11,12 @@ export const findQuizzesForCourse = async (courseId: string) => {
   );
   return response.data;
 };
+
+export const updateQuizForCourse = async (quizId: string, quiz: any) => {
+  const response = await axiosWithCredentials.put(
+    `${REMOTE_SERVER}/api/quizzes/${quizId}`,
+    quiz
+  );
+  console.log(response);
+  return response.data;
+};
