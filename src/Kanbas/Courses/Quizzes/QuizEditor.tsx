@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import MultipleChoiceEditor from "./MultipleChoiceEditor";
-import TrueFalseEditor from "./TrueFalseEditor";
-import FillInBlanksEditor from "./FillInBlanksEditor";
 import { RiProhibitedLine } from "react-icons/ri";
 import { FaCheckCircle } from "react-icons/fa";
 import { IoEllipsisVertical } from "react-icons/io5";
@@ -10,6 +7,7 @@ import * as quizClient from "./client";
 import { formatDate } from "../../utils/DateUtils";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import QuestionEditor from "./Questions/QuestionEditor";
 
 const QuizEditor = () => {
   const [activeTab, setActiveTab] = useState("Details");
@@ -88,9 +86,7 @@ const QuizEditor = () => {
     };
 
     fetchQuizDetail();
-  }, [cid]);
-
-  console.log(formData);
+  }, [cid, qid]);
 
   return (
     <>
@@ -372,55 +368,8 @@ const QuizEditor = () => {
             </form>
           </div>
         )}
-        {activeTab === "Questions" && <div>Questions content goes here.</div>}
-
-        {/* {activeTab === "Questions" && (
-          <div>
-            {questions.map((question: any) => (
-              <div key={question.id} className="mb-3">
-                {question.questionType === "multiple-choice" && (
-                  <div className="question-container">
-                    <h5>Multiple Choice</h5>
-                    <MultipleChoiceEditor />
-                  </div>
-                )}
-                {question.questionType === "true-false" && (
-                  <div className="question-container">
-                    <h5>True/False</h5>
-                    <TrueFalseEditor />
-                  </div>
-                )}
-                {question.questionType === "fill-in-blanks" && (
-                  <div className="question-container">
-                    <h5>Fill in the Blanks</h5>
-                    <FillInBlanksEditor />
-                  </div>
-                )}
-              </div>
-            ))}
-            <button
-              type="button"
-              className="btn btn-primary me-2"
-              onClick={() => addNewQuestion("multiple-choice")}
-            >
-              Add Multiple Choice
-            </button>
-            <button
-              type="button"
-              className="btn btn-primary me-2"
-              onClick={() => addNewQuestion("true-false")}
-            >
-              Add True/False
-            </button>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => addNewQuestion("fill-in-blanks")}
-            >
-              Add Fill in the Blanks
-            </button>
-          </div>
-        )} */}
+        {/* {activeTab === "Questions" && <div>Questions content goes here.</div>} */}
+        {activeTab === "Questions" && <QuestionEditor />}
       </div>
     </>
   );

@@ -40,7 +40,7 @@ const QuizDetails = () => {
       </button>
       <hr />
       <h2 className="text-dark fw-bold">{quiz.title}</h2>
-      <div className="d-flex flex-column align-items-center">
+      {/* <div className="d-flex flex-column align-items-center">
         <p>
           <span className="fw-bold">Quiz Type</span> {quiz.quizType}
         </p>
@@ -75,6 +75,61 @@ const QuizDetails = () => {
           <span className="fw-bold">Webcam Required</span>{" "}
           {quiz.webcamRequired === true ? "Yes" : "No"}
         </p>
+      </div> */}
+      <div className="d-flex flex-fill">
+        <div className="text-end">
+          <span className="fw-bold d-flex flex-fill">Quiz Type</span>
+
+          <span className="fw-bold d-flex flex-fill">Points</span>
+
+          <span className="fw-bold d-flex flex-fill">Assignment Group</span>
+
+          <span className="fw-bold d-flex flex-fill">Shuffle Answers</span>
+
+          <span className="fw-bold d-flex flex-fill">Multiple Attempts</span>
+
+          <span className="fw-bold d-flex flex-fill">Show Correct Answers</span>
+
+          <span className="fw-bold d-flex flex-fill">
+            One Question at a Time
+          </span>
+
+          <span className="fw-bold d-flex flex-fill">
+            Lock Questions after Answering
+          </span>
+
+          <span className="fw-bold d-flex flex-fill">Webcam Required</span>
+        </div>
+
+        <div>
+          <span className="d-flex flex-fill align-items-start">
+            {quiz.quizType}
+          </span>
+          <span className="d-flex flex-fill align-items-start">
+            {quiz.points}
+          </span>
+          <span className="d-flex flex-fill align-items-start">
+            {quiz.assignmentgroup}
+          </span>
+          <span className="d-flex flex-fill align-items-start">
+            {quiz.shuffleAnswers === true ? "Yes" : "No"}
+          </span>
+          <span className="d-flex flex-fill align-items-start">
+            {quiz.multipleAttempts === true ? "Yes" : "No"}
+          </span>
+          <span className="d-flex flex-fill align-items-start">
+            {quiz.showCorrectAnswers}
+          </span>
+          <span className="d-flex flex-fill align-items-start">
+            {quiz.oneQuestionAtATime === true ? "Yes" : "No"}
+          </span>
+          <span className="d-flex flex-fill align-items-start">
+            {quiz.lockQuestionsAfterAnswering === true ? "Yes" : "No"}
+          </span>
+          <span className="d-flex flex-fill align-items-start">
+            {quiz.webcamRequired === true ? "Yes" : "No"}
+          </span>
+        </div>
       </div>
       <br />
 

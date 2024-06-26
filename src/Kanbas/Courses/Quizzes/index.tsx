@@ -8,6 +8,9 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { findQuizzesForCourse } from "./client";
 import { formatDate } from "../../utils/DateUtils";
+import axios from "axios";
+import * as quizClient from "./client";
+import { BiBlock } from "react-icons/bi";
 
 export default function Quizzes() {
   const { cid } = useParams();
@@ -22,6 +25,41 @@ export default function Quizzes() {
 
     fetchQuizList();
   }, [cid]);
+
+  const handleAddNewQuiz = async (event: any) => {
+    try {
+      const axiosWithCredentials = axios.create({ withCredentials: true });
+      const response = await axiosWithCredentials.post(
+        `${process.env.REACT_APP_REMOTE_SERVER}/api/courses/${cid}/quizzes`,
+        { title: "unamed quiz" }
+      );
+      navigate(`/Kanbas/Courses/${cid}/Quizzes/${response.data._id}/edit`);
+    } catch (error) {
+      alert("failed to add new quiz");
+    }
+  };
+
+  const handleDeleteQuiz = async (quiz: any) => {
+    try {
+      const axiosWithCredentials = axios.create({ withCredentials: true });
+      await axiosWithCredentials.delete(
+        `${process.env.REACT_APP_REMOTE_SERVER}/api/quizzes/${quiz._id}`
+      );
+      const updatedQuizzes = quizzes.filter((q: any) => q._id !== quiz._id);
+      setQuizzes(updatedQuizzes);
+    } catch (error) {
+      alert("failed to delete quiz");
+    }
+  };
+
+  const handlePublishQuiz = async (quiz: any) => {
+    try {
+      const newQuiz = { ...quiz, isPublished: true };
+      const response = await quizClient.updateQuizForCourse(quiz._id, newQuiz);
+    } catch (error) {
+      alert("failed to publish quiz");
+    }
+  };
 
   return (
     <div id="wd-quizzes">
@@ -40,10 +78,7 @@ export default function Quizzes() {
           />
         </div>
         <div className="d-flex gap-1">
-          <button
-            className="btn btn-lg btn-danger"
-            onClick={() => navigate(`/Kanbas/Courses/${cid}/Quizzes/new`)}
-          >
+          <button className="btn btn-lg btn-danger" onClick={handleAddNewQuiz}>
             <FaPlus className="me-1" />
             Quiz
           </button>
@@ -73,10 +108,10 @@ export default function Quizzes() {
               >
                 {quiz.title}
               </Link>
-              <p className="m-0">
+              {/* <p className="m-0">
                 <span className="red-text">Description:</span>{" "}
-                {quiz.description}
-              </p>
+                <div dangerouslySetInnerHTML={{ __html: quiz.description }} />
+              </p> */}
               <p className="m-0 grey-4c5860 font-small">
                 <span className="fw-bold">
                   Available {formatDate(quiz.availableDate)} |{" "}
@@ -86,13 +121,18 @@ export default function Quizzes() {
                 </span>
                 <span className="fw-bold"> {quiz.points} pts | </span>
                 <span className="fw-bold">
-                  {quiz.questionIds.length} Questions
+                  {quiz.questionIds?.length} Questions
                 </span>
               </p>
             </div>
             {/* three dot menu */}
             <div className="btn-group dropend d-flex align-items-center">
-              <FaCheckCircle className="text-success" />
+              {/* <FaCheckCircle className="text-success" /> */}
+              {quiz.isPublished === true ? (
+                <FaCheckCircle className="text-success" />
+              ) : (
+                <BiBlock className="text-danger" />
+              )}
               <IoEllipsisVertical
                 type="button"
                 className="fs-4 dropdown-toggle"
@@ -111,13 +151,13 @@ export default function Quizzes() {
                 </li>
                 <li
                   className="dropdown-item"
-                  onClick={() => alert("clicked delete")}
+                  onClick={() => handleDeleteQuiz(quiz)}
                 >
                   Delete
                 </li>
                 <li
                   className="dropdown-item"
-                  onClick={() => alert("clicked publish")}
+                  onClick={() => handlePublishQuiz(quiz)}
                 >
                   Publish
                 </li>

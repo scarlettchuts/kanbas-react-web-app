@@ -17,6 +17,5 @@ export const updateQuizForCourse = async (quizId: string, quiz: any) => {
     `${REMOTE_SERVER}/api/quizzes/${quizId}`,
     quiz
   );
-  console.log(response);
   return response.data;
 };
