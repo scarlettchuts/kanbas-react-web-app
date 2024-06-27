@@ -17,12 +17,12 @@ export default function Quizzes() {
   const navigate = useNavigate();
   const [quizzes, setQuizzes] = useState([]);
 
-  useEffect(() => {
-    const fetchQuizList = async () => {
-      const response = await findQuizzesForCourse(cid as string);
-      setQuizzes(response);
-    };
+  const fetchQuizList = async () => {
+    const response = await findQuizzesForCourse(cid as string);
+    setQuizzes(response);
+  };
 
+  useEffect(() => {
     fetchQuizList();
   }, [cid]);
 
@@ -55,7 +55,8 @@ export default function Quizzes() {
   const handlePublishQuiz = async (quiz: any) => {
     try {
       const newQuiz = { ...quiz, isPublished: true };
-      const response = await quizClient.updateQuizForCourse(quiz._id, newQuiz);
+      await quizClient.updateQuizForCourse(quiz._id, newQuiz);
+      await fetchQuizList();
     } catch (error) {
       alert("failed to publish quiz");
     }

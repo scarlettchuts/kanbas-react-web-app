@@ -1,7 +1,12 @@
 import React from "react";
+import TakeQuiz from "./TakeQuiz";
 
 const QuizPreview = () => {
-  return <div>QuizPreview</div>;
+  return (
+    <>
+      <TakeQuiz />
+    </>
+  );
 };
 
 export default QuizPreview;

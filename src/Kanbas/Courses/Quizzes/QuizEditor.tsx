@@ -31,6 +31,7 @@ const QuizEditor = () => {
     dueDate: "",
     availableDate: "",
     untilDate: "",
+    questionIds: [],
   });
 
   const handleTabClick = (tabName: string) => {

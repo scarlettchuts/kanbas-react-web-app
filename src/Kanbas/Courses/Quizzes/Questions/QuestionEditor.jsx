@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
+import * as quizClient from "../client";
 
 const QuestionEditor = () => {
   const { cid, qid } = useParams();
@@ -167,10 +168,43 @@ const QuestionEditor = () => {
   };
 
   const handleSubmit = async () => {
-    let url = "";
-    let methodType = "";
+    try {
+      const maxPoints = questions.reduce(
+        (acc, question) => acc + question.points,
+        0
+      );
+      // update quiz points in db
+      const axiosWithCredentials = axios.create({ withCredentials: true });
+      await axiosWithCredentials.put(
+        `${process.env.REACT_APP_REMOTE_SERVER}/api/quizzes/${qid}`,
+        { points: maxPoints }
+      );
+    } catch (error) {
+      alert("failed to update quiz max points");
+    }
+
+    try {
+      // update the questionIds in the quiz document. Bad design: workaround for now
+      const quizzesForCourse = await quizClient.findQuizzesForCourse(cid);
+      const currentQuiz = quizzesForCourse.find((q) => q.courseId === cid);
+
+      const axiosWithCredentials = axios.create({ withCredentials: true });
+      const response = await axiosWithCredentials.get(
+        `${process.env.REACT_APP_REMOTE_SERVER}/api/quizzes/${qid}/questions`
+      );
+      const questionIdsForQuiz = response.data.map((item) => item._id);
+
+      await axiosWithCredentials.put(
+        `${process.env.REACT_APP_REMOTE_SERVER}/api/quizzes/${qid}`,
+        { questionIds: questionIdsForQuiz }
+      );
+    } catch (error) {
+      alert("failed to update the questionIds in the quiz document");
+    }
 
     const apiCalls = questions.map((question) => {
+      let url = "";
+      let methodType = "";
       if (question.hasOwnProperty("_id")) {
         url = `${process.env.REACT_APP_REMOTE_SERVER}/api/quizzes/${qid}/questions/${question._id}`;
         methodType = "PUT";
@@ -181,20 +215,23 @@ const QuestionEditor = () => {
       const requestOptions = {
         method: methodType,
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({
           ...question,
         }),
       };
+
       return fetch(url, requestOptions).then((response) => response.json());
     });
 
     try {
-      const responses = await Promise.all(apiCalls);
-      fetchQuestions();
+      // post/put questions to db
+      await Promise.all(apiCalls);
+      await fetchQuestions();
       alert("All questions submitted successfully!");
     } catch (error) {
-      fetchQuestions();
-      alert("Error occurred while submitting questions.");
+      await fetchQuestions();
+      // alert("Error occurred while submitting questions.");
     }
   };
 
